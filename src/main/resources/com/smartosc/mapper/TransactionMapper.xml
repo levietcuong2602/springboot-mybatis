@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smartosc.mapper.TransactionMapper">
+  <resultMap id="BaseResultMap" type="com.smartosc.entity.Transaction">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="hash" jdbcType="DISTINCT" property="hash" />
+    <result column="block_id" jdbcType="BIGINT" property="blockId" />
+    <result column="block_index" jdbcType="DISTINCT" property="blockIndex" />
+    <result column="out_sum" jdbcType="DISTINCT" property="outSum" />
+    <result column="fee" jdbcType="DISTINCT" property="fee" />
+    <result column="deposit" jdbcType="BIGINT" property="deposit" />
+    <result column="size" jdbcType="DISTINCT" property="size" />
+    <result column="invalid_before" jdbcType="DISTINCT" property="invalidBefore" />
+    <result column="invalid_hereafter" jdbcType="DISTINCT" property="invalidHereafter" />
+    <result column="valid_contract" jdbcType="BIT" property="validContract" />
+    <result column="script_size" jdbcType="DISTINCT" property="scriptSize" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, hash, block_id, block_index, out_sum, fee, deposit, size, invalid_before, invalid_hereafter, 
+    valid_contract, script_size
+  </sql>
+  <select id="selectByExample" parameterType="com.smartosc.entity.TransactionExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tx
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tx
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tx
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.smartosc.entity.TransactionExample">
+    delete from tx
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.smartosc.entity.Transaction">
+    insert into tx (id, hash, block_id, 
+      block_index, out_sum, fee, 
+      deposit, size, invalid_before, 
+      invalid_hereafter, valid_contract, script_size
+      )
+    values (#{id,jdbcType=BIGINT}, #{hash,jdbcType=DISTINCT}, #{blockId,jdbcType=BIGINT}, 
+      #{blockIndex,jdbcType=DISTINCT}, #{outSum,jdbcType=DISTINCT}, #{fee,jdbcType=DISTINCT}, 
+      #{deposit,jdbcType=BIGINT}, #{size,jdbcType=DISTINCT}, #{invalidBefore,jdbcType=DISTINCT}, 
+      #{invalidHereafter,jdbcType=DISTINCT}, #{validContract,jdbcType=BIT}, #{scriptSize,jdbcType=DISTINCT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.smartosc.entity.Transaction">
+    insert into tx
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="hash != null">
+        hash,
+      </if>
+      <if test="blockId != null">
+        block_id,
+      </if>
+      <if test="blockIndex != null">
+        block_index,
+      </if>
+      <if test="outSum != null">
+        out_sum,
+      </if>
+      <if test="fee != null">
+        fee,
+      </if>
+      <if test="deposit != null">
+        deposit,
+      </if>
+      <if test="size != null">
+        size,
+      </if>
+      <if test="invalidBefore != null">
+        invalid_before,
+      </if>
+      <if test="invalidHereafter != null">
+        invalid_hereafter,
+      </if>
+      <if test="validContract != null">
+        valid_contract,
+      </if>
+      <if test="scriptSize != null">
+        script_size,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="hash != null">
+        #{hash,jdbcType=DISTINCT},
+      </if>
+      <if test="blockId != null">
+        #{blockId,jdbcType=BIGINT},
+      </if>
+      <if test="blockIndex != null">
+        #{blockIndex,jdbcType=DISTINCT},
+      </if>
+      <if test="outSum != null">
+        #{outSum,jdbcType=DISTINCT},
+      </if>
+      <if test="fee != null">
+        #{fee,jdbcType=DISTINCT},
+      </if>
+      <if test="deposit != null">
+        #{deposit,jdbcType=BIGINT},
+      </if>
+      <if test="size != null">
+        #{size,jdbcType=DISTINCT},
+      </if>
+      <if test="invalidBefore != null">
+        #{invalidBefore,jdbcType=DISTINCT},
+      </if>
+      <if test="invalidHereafter != null">
+        #{invalidHereafter,jdbcType=DISTINCT},
+      </if>
+      <if test="validContract != null">
+        #{validContract,jdbcType=BIT},
+      </if>
+      <if test="scriptSize != null">
+        #{scriptSize,jdbcType=DISTINCT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.smartosc.entity.TransactionExample" resultType="java.lang.Long">
+    select count(*) from tx
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tx
+    <set>
+      <if test="row.id != null">
+        id = #{row.id,jdbcType=BIGINT},
+      </if>
+      <if test="row.hash != null">
+        hash = #{row.hash,jdbcType=DISTINCT},
+      </if>
+      <if test="row.blockId != null">
+        block_id = #{row.blockId,jdbcType=BIGINT},
+      </if>
+      <if test="row.blockIndex != null">
+        block_index = #{row.blockIndex,jdbcType=DISTINCT},
+      </if>
+      <if test="row.outSum != null">
+        out_sum = #{row.outSum,jdbcType=DISTINCT},
+      </if>
+      <if test="row.fee != null">
+        fee = #{row.fee,jdbcType=DISTINCT},
+      </if>
+      <if test="row.deposit != null">
+        deposit = #{row.deposit,jdbcType=BIGINT},
+      </if>
+      <if test="row.size != null">
+        size = #{row.size,jdbcType=DISTINCT},
+      </if>
+      <if test="row.invalidBefore != null">
+        invalid_before = #{row.invalidBefore,jdbcType=DISTINCT},
+      </if>
+      <if test="row.invalidHereafter != null">
+        invalid_hereafter = #{row.invalidHereafter,jdbcType=DISTINCT},
+      </if>
+      <if test="row.validContract != null">
+        valid_contract = #{row.validContract,jdbcType=BIT},
+      </if>
+      <if test="row.scriptSize != null">
+        script_size = #{row.scriptSize,jdbcType=DISTINCT},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tx
+    set id = #{row.id,jdbcType=BIGINT},
+      hash = #{row.hash,jdbcType=DISTINCT},
+      block_id = #{row.blockId,jdbcType=BIGINT},
+      block_index = #{row.blockIndex,jdbcType=DISTINCT},
+      out_sum = #{row.outSum,jdbcType=DISTINCT},
+      fee = #{row.fee,jdbcType=DISTINCT},
+      deposit = #{row.deposit,jdbcType=BIGINT},
+      size = #{row.size,jdbcType=DISTINCT},
+      invalid_before = #{row.invalidBefore,jdbcType=DISTINCT},
+      invalid_hereafter = #{row.invalidHereafter,jdbcType=DISTINCT},
+      valid_contract = #{row.validContract,jdbcType=BIT},
+      script_size = #{row.scriptSize,jdbcType=DISTINCT}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.smartosc.entity.Transaction">
+    update tx
+    <set>
+      <if test="hash != null">
+        hash = #{hash,jdbcType=DISTINCT},
+      </if>
+      <if test="blockId != null">
+        block_id = #{blockId,jdbcType=BIGINT},
+      </if>
+      <if test="blockIndex != null">
+        block_index = #{blockIndex,jdbcType=DISTINCT},
+      </if>
+      <if test="outSum != null">
+        out_sum = #{outSum,jdbcType=DISTINCT},
+      </if>
+      <if test="fee != null">
+        fee = #{fee,jdbcType=DISTINCT},
+      </if>
+      <if test="deposit != null">
+        deposit = #{deposit,jdbcType=BIGINT},
+      </if>
+      <if test="size != null">
+        size = #{size,jdbcType=DISTINCT},
+      </if>
+      <if test="invalidBefore != null">
+        invalid_before = #{invalidBefore,jdbcType=DISTINCT},
+      </if>
+      <if test="invalidHereafter != null">
+        invalid_hereafter = #{invalidHereafter,jdbcType=DISTINCT},
+      </if>
+      <if test="validContract != null">
+        valid_contract = #{validContract,jdbcType=BIT},
+      </if>
+      <if test="scriptSize != null">
+        script_size = #{scriptSize,jdbcType=DISTINCT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.smartosc.entity.Transaction">
+    update tx
+    set hash = #{hash,jdbcType=DISTINCT},
+      block_id = #{blockId,jdbcType=BIGINT},
+      block_index = #{blockIndex,jdbcType=DISTINCT},
+      out_sum = #{outSum,jdbcType=DISTINCT},
+      fee = #{fee,jdbcType=DISTINCT},
+      deposit = #{deposit,jdbcType=BIGINT},
+      size = #{size,jdbcType=DISTINCT},
+      invalid_before = #{invalidBefore,jdbcType=DISTINCT},
+      invalid_hereafter = #{invalidHereafter,jdbcType=DISTINCT},
+      valid_contract = #{validContract,jdbcType=BIT},
+      script_size = #{scriptSize,jdbcType=DISTINCT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smartosc.mapper.TxOutMapper">
+  <resultMap id="BaseResultMap" type="com.smartosc.entity.TxOut">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="tx_id" jdbcType="BIGINT" property="txId" />
+    <result column="index" jdbcType="DISTINCT" property="index" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="address_has_script" jdbcType="BIT" property="addressHasScript" />
+    <result column="payment_cred" jdbcType="DISTINCT" property="paymentCred" />
+    <result column="stake_address_id" jdbcType="BIGINT" property="stakeAddressId" />
+    <result column="value" jdbcType="DISTINCT" property="value" />
+    <result column="data_hash" jdbcType="DISTINCT" property="dataHash" />
+    <result column="inline_datum_id" jdbcType="BIGINT" property="inlineDatumId" />
+    <result column="reference_script_id" jdbcType="BIGINT" property="referenceScriptId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.smartosc.entity.TxOut">
+    <result column="address_raw" jdbcType="BINARY" property="addressRaw" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, tx_id, index, address, address_has_script, payment_cred, stake_address_id, value, 
+    data_hash, inline_datum_id, reference_script_id
+  </sql>
+  <sql id="Blob_Column_List">
+    address_raw
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.smartosc.entity.TxOutExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tx_out
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.smartosc.entity.TxOutExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tx_out
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tx_out
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tx_out
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.smartosc.entity.TxOutExample">
+    delete from tx_out
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.smartosc.entity.TxOut">
+    insert into tx_out (id, tx_id, index, 
+      address, address_has_script, payment_cred, 
+      stake_address_id, value, data_hash, 
+      inline_datum_id, reference_script_id, address_raw
+      )
+    values (#{id,jdbcType=BIGINT}, #{txId,jdbcType=BIGINT}, #{index,jdbcType=DISTINCT}, 
+      #{address,jdbcType=VARCHAR}, #{addressHasScript,jdbcType=BIT}, #{paymentCred,jdbcType=DISTINCT}, 
+      #{stakeAddressId,jdbcType=BIGINT}, #{value,jdbcType=DISTINCT}, #{dataHash,jdbcType=DISTINCT}, 
+      #{inlineDatumId,jdbcType=BIGINT}, #{referenceScriptId,jdbcType=BIGINT}, #{addressRaw,jdbcType=BINARY}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.smartosc.entity.TxOut">
+    insert into tx_out
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="txId != null">
+        tx_id,
+      </if>
+      <if test="index != null">
+        index,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="addressHasScript != null">
+        address_has_script,
+      </if>
+      <if test="paymentCred != null">
+        payment_cred,
+      </if>
+      <if test="stakeAddressId != null">
+        stake_address_id,
+      </if>
+      <if test="value != null">
+        value,
+      </if>
+      <if test="dataHash != null">
+        data_hash,
+      </if>
+      <if test="inlineDatumId != null">
+        inline_datum_id,
+      </if>
+      <if test="referenceScriptId != null">
+        reference_script_id,
+      </if>
+      <if test="addressRaw != null">
+        address_raw,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="txId != null">
+        #{txId,jdbcType=BIGINT},
+      </if>
+      <if test="index != null">
+        #{index,jdbcType=DISTINCT},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="addressHasScript != null">
+        #{addressHasScript,jdbcType=BIT},
+      </if>
+      <if test="paymentCred != null">
+        #{paymentCred,jdbcType=DISTINCT},
+      </if>
+      <if test="stakeAddressId != null">
+        #{stakeAddressId,jdbcType=BIGINT},
+      </if>
+      <if test="value != null">
+        #{value,jdbcType=DISTINCT},
+      </if>
+      <if test="dataHash != null">
+        #{dataHash,jdbcType=DISTINCT},
+      </if>
+      <if test="inlineDatumId != null">
+        #{inlineDatumId,jdbcType=BIGINT},
+      </if>
+      <if test="referenceScriptId != null">
+        #{referenceScriptId,jdbcType=BIGINT},
+      </if>
+      <if test="addressRaw != null">
+        #{addressRaw,jdbcType=BINARY},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.smartosc.entity.TxOutExample" resultType="java.lang.Long">
+    select count(*) from tx_out
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tx_out
+    <set>
+      <if test="row.id != null">
+        id = #{row.id,jdbcType=BIGINT},
+      </if>
+      <if test="row.txId != null">
+        tx_id = #{row.txId,jdbcType=BIGINT},
+      </if>
+      <if test="row.index != null">
+        index = #{row.index,jdbcType=DISTINCT},
+      </if>
+      <if test="row.address != null">
+        address = #{row.address,jdbcType=VARCHAR},
+      </if>
+      <if test="row.addressHasScript != null">
+        address_has_script = #{row.addressHasScript,jdbcType=BIT},
+      </if>
+      <if test="row.paymentCred != null">
+        payment_cred = #{row.paymentCred,jdbcType=DISTINCT},
+      </if>
+      <if test="row.stakeAddressId != null">
+        stake_address_id = #{row.stakeAddressId,jdbcType=BIGINT},
+      </if>
+      <if test="row.value != null">
+        value = #{row.value,jdbcType=DISTINCT},
+      </if>
+      <if test="row.dataHash != null">
+        data_hash = #{row.dataHash,jdbcType=DISTINCT},
+      </if>
+      <if test="row.inlineDatumId != null">
+        inline_datum_id = #{row.inlineDatumId,jdbcType=BIGINT},
+      </if>
+      <if test="row.referenceScriptId != null">
+        reference_script_id = #{row.referenceScriptId,jdbcType=BIGINT},
+      </if>
+      <if test="row.addressRaw != null">
+        address_raw = #{row.addressRaw,jdbcType=BINARY},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update tx_out
+    set id = #{row.id,jdbcType=BIGINT},
+      tx_id = #{row.txId,jdbcType=BIGINT},
+      index = #{row.index,jdbcType=DISTINCT},
+      address = #{row.address,jdbcType=VARCHAR},
+      address_has_script = #{row.addressHasScript,jdbcType=BIT},
+      payment_cred = #{row.paymentCred,jdbcType=DISTINCT},
+      stake_address_id = #{row.stakeAddressId,jdbcType=BIGINT},
+      value = #{row.value,jdbcType=DISTINCT},
+      data_hash = #{row.dataHash,jdbcType=DISTINCT},
+      inline_datum_id = #{row.inlineDatumId,jdbcType=BIGINT},
+      reference_script_id = #{row.referenceScriptId,jdbcType=BIGINT},
+      address_raw = #{row.addressRaw,jdbcType=BINARY}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tx_out
+    set id = #{row.id,jdbcType=BIGINT},
+      tx_id = #{row.txId,jdbcType=BIGINT},
+      index = #{row.index,jdbcType=DISTINCT},
+      address = #{row.address,jdbcType=VARCHAR},
+      address_has_script = #{row.addressHasScript,jdbcType=BIT},
+      payment_cred = #{row.paymentCred,jdbcType=DISTINCT},
+      stake_address_id = #{row.stakeAddressId,jdbcType=BIGINT},
+      value = #{row.value,jdbcType=DISTINCT},
+      data_hash = #{row.dataHash,jdbcType=DISTINCT},
+      inline_datum_id = #{row.inlineDatumId,jdbcType=BIGINT},
+      reference_script_id = #{row.referenceScriptId,jdbcType=BIGINT}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.smartosc.entity.TxOut">
+    update tx_out
+    <set>
+      <if test="txId != null">
+        tx_id = #{txId,jdbcType=BIGINT},
+      </if>
+      <if test="index != null">
+        index = #{index,jdbcType=DISTINCT},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="addressHasScript != null">
+        address_has_script = #{addressHasScript,jdbcType=BIT},
+      </if>
+      <if test="paymentCred != null">
+        payment_cred = #{paymentCred,jdbcType=DISTINCT},
+      </if>
+      <if test="stakeAddressId != null">
+        stake_address_id = #{stakeAddressId,jdbcType=BIGINT},
+      </if>
+      <if test="value != null">
+        value = #{value,jdbcType=DISTINCT},
+      </if>
+      <if test="dataHash != null">
+        data_hash = #{dataHash,jdbcType=DISTINCT},
+      </if>
+      <if test="inlineDatumId != null">
+        inline_datum_id = #{inlineDatumId,jdbcType=BIGINT},
+      </if>
+      <if test="referenceScriptId != null">
+        reference_script_id = #{referenceScriptId,jdbcType=BIGINT},
+      </if>
+      <if test="addressRaw != null">
+        address_raw = #{addressRaw,jdbcType=BINARY},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.smartosc.entity.TxOut">
+    update tx_out
+    set tx_id = #{txId,jdbcType=BIGINT},
+      index = #{index,jdbcType=DISTINCT},
+      address = #{address,jdbcType=VARCHAR},
+      address_has_script = #{addressHasScript,jdbcType=BIT},
+      payment_cred = #{paymentCred,jdbcType=DISTINCT},
+      stake_address_id = #{stakeAddressId,jdbcType=BIGINT},
+      value = #{value,jdbcType=DISTINCT},
+      data_hash = #{dataHash,jdbcType=DISTINCT},
+      inline_datum_id = #{inlineDatumId,jdbcType=BIGINT},
+      reference_script_id = #{referenceScriptId,jdbcType=BIGINT},
+      address_raw = #{addressRaw,jdbcType=BINARY}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.smartosc.entity.TxOut">
+    update tx_out
+    set tx_id = #{txId,jdbcType=BIGINT},
+      index = #{index,jdbcType=DISTINCT},
+      address = #{address,jdbcType=VARCHAR},
+      address_has_script = #{addressHasScript,jdbcType=BIT},
+      payment_cred = #{paymentCred,jdbcType=DISTINCT},
+      stake_address_id = #{stakeAddressId,jdbcType=BIGINT},
+      value = #{value,jdbcType=DISTINCT},
+      data_hash = #{dataHash,jdbcType=DISTINCT},
+      inline_datum_id = #{inlineDatumId,jdbcType=BIGINT},
+      reference_script_id = #{referenceScriptId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

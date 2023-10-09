@@ -1,4 +1,4 @@
-package com.smartosc.exceptions;
+package com.smartosc.exception;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;

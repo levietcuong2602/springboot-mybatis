@@ -1,4 +1,4 @@
-package com.smartosc.exceptions;
+package com.smartosc.exception;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.smartosc.constants.ExceptionConstants;

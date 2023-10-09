@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smartosc.mapper.TxInMapper">
+  <resultMap id="BaseResultMap" type="com.smartosc.entity.TxIn">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="tx_in_id" jdbcType="BIGINT" property="txInId" />
+    <result column="tx_out_id" jdbcType="BIGINT" property="txOutId" />
+    <result column="tx_out_index" jdbcType="DISTINCT" property="txOutIndex" />
+    <result column="redeemer_id" jdbcType="BIGINT" property="redeemerId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, tx_in_id, tx_out_id, tx_out_index, redeemer_id
+  </sql>
+  <select id="selectByExample" parameterType="com.smartosc.entity.TxInExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tx_in
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tx_in
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tx_in
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.smartosc.entity.TxInExample">
+    delete from tx_in
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.smartosc.entity.TxIn">
+    insert into tx_in (id, tx_in_id, tx_out_id, 
+      tx_out_index, redeemer_id)
+    values (#{id,jdbcType=BIGINT}, #{txInId,jdbcType=BIGINT}, #{txOutId,jdbcType=BIGINT}, 
+      #{txOutIndex,jdbcType=DISTINCT}, #{redeemerId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.smartosc.entity.TxIn">
+    insert into tx_in
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="txInId != null">
+        tx_in_id,
+      </if>
+      <if test="txOutId != null">
+        tx_out_id,
+      </if>
+      <if test="txOutIndex != null">
+        tx_out_index,
+      </if>
+      <if test="redeemerId != null">
+        redeemer_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="txInId != null">
+        #{txInId,jdbcType=BIGINT},
+      </if>
+      <if test="txOutId != null">
+        #{txOutId,jdbcType=BIGINT},
+      </if>
+      <if test="txOutIndex != null">
+        #{txOutIndex,jdbcType=DISTINCT},
+      </if>
+      <if test="redeemerId != null">
+        #{redeemerId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.smartosc.entity.TxInExample" resultType="java.lang.Long">
+    select count(*) from tx_in
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tx_in
+    <set>
+      <if test="row.id != null">
+        id = #{row.id,jdbcType=BIGINT},
+      </if>
+      <if test="row.txInId != null">
+        tx_in_id = #{row.txInId,jdbcType=BIGINT},
+      </if>
+      <if test="row.txOutId != null">
+        tx_out_id = #{row.txOutId,jdbcType=BIGINT},
+      </if>
+      <if test="row.txOutIndex != null">
+        tx_out_index = #{row.txOutIndex,jdbcType=DISTINCT},
+      </if>
+      <if test="row.redeemerId != null">
+        redeemer_id = #{row.redeemerId,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tx_in
+    set id = #{row.id,jdbcType=BIGINT},
+      tx_in_id = #{row.txInId,jdbcType=BIGINT},
+      tx_out_id = #{row.txOutId,jdbcType=BIGINT},
+      tx_out_index = #{row.txOutIndex,jdbcType=DISTINCT},
+      redeemer_id = #{row.redeemerId,jdbcType=BIGINT}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.smartosc.entity.TxIn">
+    update tx_in
+    <set>
+      <if test="txInId != null">
+        tx_in_id = #{txInId,jdbcType=BIGINT},
+      </if>
+      <if test="txOutId != null">
+        tx_out_id = #{txOutId,jdbcType=BIGINT},
+      </if>
+      <if test="txOutIndex != null">
+        tx_out_index = #{txOutIndex,jdbcType=DISTINCT},
+      </if>
+      <if test="redeemerId != null">
+        redeemer_id = #{redeemerId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.smartosc.entity.TxIn">
+    update tx_in
+    set tx_in_id = #{txInId,jdbcType=BIGINT},
+      tx_out_id = #{txOutId,jdbcType=BIGINT},
+      tx_out_index = #{txOutIndex,jdbcType=DISTINCT},
+      redeemer_id = #{redeemerId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
