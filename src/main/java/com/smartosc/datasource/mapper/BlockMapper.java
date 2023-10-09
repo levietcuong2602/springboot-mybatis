@@ -1,10 +1,10 @@
-package com.smartosc.mapper;
+package com.smartosc.datasource.mapper;
 
-import com.smartosc.entity.Block;
-import com.smartosc.entity.BlockExample;
-import io.swagger.annotations.ApiModelProperty;
+import com.smartosc.datasource.entity.Block;
+import com.smartosc.datasource.entity.BlockExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 public interface BlockMapper {
     long countByExample(BlockExample example);

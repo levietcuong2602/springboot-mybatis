@@ -1,10 +1,16 @@
-package com.smartosc.mapper;
+package com.smartosc.datasource.mapper;
 
-import com.smartosc.entity.Transaction;
-import com.smartosc.entity.TransactionExample;
-import io.swagger.annotations.ApiModelProperty;
+import com.smartosc.datasource.entity.Block;
+import com.smartosc.datasource.entity.Transaction;
+import com.smartosc.datasource.entity.TransactionExample;
+
+import java.util.Collection;
 import java.util.List;
+
+import com.smartosc.datasource.vo.TransactionVo4List;
+import com.smartosc.datasource.vo.TxOutVoInTxList;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.context.annotation.DependsOn;
 
 public interface TransactionMapper {
     long countByExample(TransactionExample example);

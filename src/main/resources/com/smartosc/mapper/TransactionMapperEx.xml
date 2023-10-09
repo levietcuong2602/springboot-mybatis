@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smartosc.datasource.mapper.TransactionMapperEx">
+    <resultMap id="ResultGetBlockByIdMap" type="com.smartosc.datasource.vo.BlockVo">
+        <result column="block_hash" jdbcType="VARCHAR" property="blockHash" />
+        <result column="epoch_no" jdbcType="DISTINCT" property="epochNo" />
+        <result column="slot_no" jdbcType="DISTINCT" property="slotNo" />
+        <result column="epoch_slot_no" jdbcType="DISTINCT" property="epochSlotNo" />
+        <result column="block_no" jdbcType="DISTINCT" property="blockNo" />
+        <result column="previous_id" jdbcType="BIGINT" property="previousId" />
+        <result column="slot_leader_id" jdbcType="BIGINT" property="slotLeaderId" />
+        <result column="size" jdbcType="DISTINCT" property="size" />
+        <result column="time" jdbcType="TIMESTAMP" property="time" />
+        <result column="tx_count" jdbcType="BIGINT" property="txCount" />
+        <result column="proto_major" jdbcType="DISTINCT" property="protoMajor" />
+        <result column="proto_minor" jdbcType="DISTINCT" property="protoMinor" />
+        <result column="vrf_key" jdbcType="VARCHAR" property="vrfKey" />
+        <result column="op_cert" jdbcType="DISTINCT" property="opCert" />
+        <result column="op_cert_counter" jdbcType="DISTINCT" property="opCertCounter" />
+    </resultMap>
+    <resultMap id="ResultGetTxOutsByTxIdMap" type="com.smartosc.datasource.vo.TxOutVoInTxList">
+        <result column="block_hash" jdbcType="VARCHAR" property="blockHash" />
+        <result column="epoch_no" jdbcType="DISTINCT" property="epochNo" />
+        <result column="slot_no" jdbcType="DISTINCT" property="slotNo" />
+        <result column="epoch_slot_no" jdbcType="DISTINCT" property="epochSlotNo" />
+        <result column="block_no" jdbcType="DISTINCT" property="blockNo" />
+        <result column="previous_id" jdbcType="BIGINT" property="previousId" />
+        <result column="slot_leader_id" jdbcType="BIGINT" property="slotLeaderId" />
+        <result column="size" jdbcType="DISTINCT" property="size" />
+        <result column="time" jdbcType="TIMESTAMP" property="time" />
+        <result column="tx_count" jdbcType="BIGINT" property="txCount" />
+        <result column="proto_major" jdbcType="DISTINCT" property="protoMajor" />
+        <result column="proto_minor" jdbcType="DISTINCT" property="protoMinor" />
+        <result column="vrf_key" jdbcType="VARCHAR" property="vrfKey" />
+        <result column="op_cert" jdbcType="DISTINCT" property="opCert" />
+        <result column="op_cert_counter" jdbcType="DISTINCT" property="opCertCounter" />
+    </resultMap>
+    <resultMap id="BaseResultWithAssociateMap" type="com.smartosc.datasource.vo.TransactionVo4List">
+        <result column="hash" jdbcType="VARCHAR" property="hash" />
+        <result column="block_index" jdbcType="DISTINCT" property="blockIndex" />
+        <result column="out_sum" jdbcType="DISTINCT" property="outSum" />
+        <result column="fee" jdbcType="DISTINCT" property="fee" />
+        <result column="deposit" jdbcType="BIGINT" property="deposit" />
+        <result column="size" jdbcType="DISTINCT" property="size" />
+        <result column="invalid_before" jdbcType="DISTINCT" property="invalidBefore" />
+        <result column="invalid_hereafter" jdbcType="DISTINCT" property="invalidHereafter" />
+        <result column="valid_contract" jdbcType="BIT" property="validContract" />
+        <result column="script_size" jdbcType="DISTINCT" property="scriptSize" />
+        <!--        one to one     -->
+        <association property="block" javaType="com.smartosc.datasource.vo.BlockVo" select="selectBlockByTxId" column="block_id"/>
+        <!--  one to many  -->
+        <collection property="txOuts" ofType="com.smartosc.datasource.vo.TxOutVoInTxList" select="selectTxOutsByTxId" column="id" />
+    </resultMap>
+
+    <select id="selectByCondition" resultMap="BaseResultWithAssociateMap">
+        select tx.*, block.*, block.hash as block_hash, txo.*
+        from tx tx
+        left join block on tx.block_id = block.id
+        left join tx_out txo on tx.id=txo.tx_id
+        where 1=1
+        order by tx.id DESC
+        <if test="offset != null and limit != null">
+            LIMIT #{limit} OFFSET #{offset};
+        </if>
+    </select>
+    <select id="selectBlockByTxId" resultMap="ResultGetBlockByIdMap">
+        select *
+        from block
+        where block.id = #{blockId}
+    </select>
+    <select id="selectTxOutsByTxId" resultMap="ResultGetTxOutsByTxIdMap">
+        select *
+        from tx_out txo
+        where txo.tx_id = #{txId}
+    </select>
+</mapper>

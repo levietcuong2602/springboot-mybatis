@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.smartosc.mapper.BlockMapper">
-  <resultMap id="BaseResultMap" type="com.smartosc.entity.Block">
+<mapper namespace="com.smartosc.datasource.mapper.BlockMapper">
+  <resultMap id="BaseResultMap" type="com.smartosc.datasource.entity.Block">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="hash" jdbcType="DISTINCT" property="hash" />
     <result column="epoch_no" jdbcType="DISTINCT" property="epochNo" />
@@ -81,7 +81,7 @@
     id, hash, epoch_no, slot_no, epoch_slot_no, block_no, previous_id, slot_leader_id, 
     size, time, tx_count, proto_major, proto_minor, vrf_key, op_cert, op_cert_counter
   </sql>
-  <select id="selectByExample" parameterType="com.smartosc.entity.BlockExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.smartosc.datasource.entity.BlockExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -105,13 +105,13 @@
     delete from block
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.smartosc.entity.BlockExample">
+  <delete id="deleteByExample" parameterType="com.smartosc.datasource.entity.BlockExample">
     delete from block
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.smartosc.entity.Block">
+  <insert id="insert" parameterType="com.smartosc.datasource.entity.Block">
     insert into block (id, hash, epoch_no, 
       slot_no, epoch_slot_no, block_no, 
       previous_id, slot_leader_id, size, 
@@ -125,7 +125,7 @@
       #{protoMinor,jdbcType=DISTINCT}, #{vrfKey,jdbcType=VARCHAR}, #{opCert,jdbcType=DISTINCT}, 
       #{opCertCounter,jdbcType=DISTINCT})
   </insert>
-  <insert id="insertSelective" parameterType="com.smartosc.entity.Block">
+  <insert id="insertSelective" parameterType="com.smartosc.datasource.entity.Block">
     insert into block
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -228,7 +228,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.smartosc.entity.BlockExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.smartosc.datasource.entity.BlockExample" resultType="java.lang.Long">
     select count(*) from block
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -312,7 +312,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.smartosc.entity.Block">
+  <update id="updateByPrimaryKeySelective" parameterType="com.smartosc.datasource.entity.Block">
     update block
     <set>
       <if test="hash != null">
@@ -363,7 +363,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.smartosc.entity.Block">
+  <update id="updateByPrimaryKey" parameterType="com.smartosc.datasource.entity.Block">
     update block
     set hash = #{hash,jdbcType=DISTINCT},
       epoch_no = #{epochNo,jdbcType=DISTINCT},

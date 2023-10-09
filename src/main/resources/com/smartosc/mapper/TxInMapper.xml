@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.smartosc.mapper.TxInMapper">
-  <resultMap id="BaseResultMap" type="com.smartosc.entity.TxIn">
+<mapper namespace="com.smartosc.datasource.mapper.TxInMapper">
+  <resultMap id="BaseResultMap" type="com.smartosc.datasource.entity.TxIn">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="tx_in_id" jdbcType="BIGINT" property="txInId" />
     <result column="tx_out_id" jdbcType="BIGINT" property="txOutId" />
@@ -69,7 +69,7 @@
   <sql id="Base_Column_List">
     id, tx_in_id, tx_out_id, tx_out_index, redeemer_id
   </sql>
-  <select id="selectByExample" parameterType="com.smartosc.entity.TxInExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.smartosc.datasource.entity.TxInExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -93,19 +93,19 @@
     delete from tx_in
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.smartosc.entity.TxInExample">
+  <delete id="deleteByExample" parameterType="com.smartosc.datasource.entity.TxInExample">
     delete from tx_in
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.smartosc.entity.TxIn">
+  <insert id="insert" parameterType="com.smartosc.datasource.entity.TxIn">
     insert into tx_in (id, tx_in_id, tx_out_id, 
       tx_out_index, redeemer_id)
     values (#{id,jdbcType=BIGINT}, #{txInId,jdbcType=BIGINT}, #{txOutId,jdbcType=BIGINT}, 
       #{txOutIndex,jdbcType=DISTINCT}, #{redeemerId,jdbcType=BIGINT})
   </insert>
-  <insert id="insertSelective" parameterType="com.smartosc.entity.TxIn">
+  <insert id="insertSelective" parameterType="com.smartosc.datasource.entity.TxIn">
     insert into tx_in
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -142,7 +142,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.smartosc.entity.TxInExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.smartosc.datasource.entity.TxInExample" resultType="java.lang.Long">
     select count(*) from tx_in
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -182,7 +182,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.smartosc.entity.TxIn">
+  <update id="updateByPrimaryKeySelective" parameterType="com.smartosc.datasource.entity.TxIn">
     update tx_in
     <set>
       <if test="txInId != null">
@@ -200,7 +200,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.smartosc.entity.TxIn">
+  <update id="updateByPrimaryKey" parameterType="com.smartosc.datasource.entity.TxIn">
     update tx_in
     set tx_in_id = #{txInId,jdbcType=BIGINT},
       tx_out_id = #{txOutId,jdbcType=BIGINT},

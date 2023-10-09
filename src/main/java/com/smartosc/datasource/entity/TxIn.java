@@ -1,6 +1,6 @@
-package com.smartosc.entity;
+package com.smartosc.datasource.entity;
 
-import io.swagger.annotations.ApiModelProperty;
+//import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 
 public class TxIn implements Serializable {

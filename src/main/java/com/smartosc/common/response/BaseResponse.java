@@ -1,6 +1,6 @@
 package com.smartosc.common.response;
 
-import io.swagger.annotations.ApiModelProperty;
+//import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -18,19 +18,19 @@ public class BaseResponse<T> implements Serializable {
     /**
      * 结果码
      */
-    @ApiModelProperty(value = "result code")
+//    @ApiModelProperty(value = "result code")
     private Long code;
 
     /**
      * 提示信息
      */
-    @ApiModelProperty(value = "result message")
+//    @ApiModelProperty(value = "result message")
     private String message;
 
     /**
      * 返回数据
      */
-    @ApiModelProperty(value = "result data")
+//    @ApiModelProperty(value = "result data")
     private T data;
 
     /**

@@ -1,8 +1,7 @@
-package com.smartosc.mapper;
+package com.smartosc.datasource.mapper;
 
-import com.smartosc.entity.TxIn;
-import com.smartosc.entity.TxInExample;
-import io.swagger.annotations.ApiModelProperty;
+import com.smartosc.datasource.entity.TxIn;
+import com.smartosc.datasource.entity.TxInExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

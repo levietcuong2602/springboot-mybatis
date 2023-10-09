@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.smartosc.mapper.TxOutMapper">
-  <resultMap id="BaseResultMap" type="com.smartosc.entity.TxOut">
+<mapper namespace="com.smartosc.datasource.mapper.TxOutMapper">
+  <resultMap id="BaseResultMap" type="com.smartosc.datasource.entity.TxOut">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="tx_id" jdbcType="BIGINT" property="txId" />
     <result column="index" jdbcType="DISTINCT" property="index" />
@@ -14,7 +14,7 @@
     <result column="inline_datum_id" jdbcType="BIGINT" property="inlineDatumId" />
     <result column="reference_script_id" jdbcType="BIGINT" property="referenceScriptId" />
   </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.smartosc.entity.TxOut">
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.smartosc.datasource.entity.TxOut">
     <result column="address_raw" jdbcType="BINARY" property="addressRaw" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -82,7 +82,7 @@
   <sql id="Blob_Column_List">
     address_raw
   </sql>
-  <select id="selectByExampleWithBLOBs" parameterType="com.smartosc.entity.TxOutExample" resultMap="ResultMapWithBLOBs">
+  <select id="selectByExampleWithBLOBs" parameterType="com.smartosc.datasource.entity.TxOutExample" resultMap="ResultMapWithBLOBs">
     select
     <if test="distinct">
       distinct
@@ -98,7 +98,7 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" parameterType="com.smartosc.entity.TxOutExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.smartosc.datasource.entity.TxOutExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -124,13 +124,13 @@
     delete from tx_out
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.smartosc.entity.TxOutExample">
+  <delete id="deleteByExample" parameterType="com.smartosc.datasource.entity.TxOutExample">
     delete from tx_out
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.smartosc.entity.TxOut">
+  <insert id="insert" parameterType="com.smartosc.datasource.entity.TxOut">
     insert into tx_out (id, tx_id, index, 
       address, address_has_script, payment_cred, 
       stake_address_id, value, data_hash, 
@@ -142,7 +142,7 @@
       #{inlineDatumId,jdbcType=BIGINT}, #{referenceScriptId,jdbcType=BIGINT}, #{addressRaw,jdbcType=BINARY}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.smartosc.entity.TxOut">
+  <insert id="insertSelective" parameterType="com.smartosc.datasource.entity.TxOut">
     insert into tx_out
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -221,7 +221,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.smartosc.entity.TxOutExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.smartosc.datasource.entity.TxOutExample" resultType="java.lang.Long">
     select count(*) from tx_out
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -306,7 +306,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.smartosc.entity.TxOut">
+  <update id="updateByPrimaryKeySelective" parameterType="com.smartosc.datasource.entity.TxOut">
     update tx_out
     <set>
       <if test="txId != null">
@@ -345,7 +345,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.smartosc.entity.TxOut">
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.smartosc.datasource.entity.TxOut">
     update tx_out
     set tx_id = #{txId,jdbcType=BIGINT},
       index = #{index,jdbcType=DISTINCT},
@@ -360,7 +360,7 @@
       address_raw = #{addressRaw,jdbcType=BINARY}
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.smartosc.entity.TxOut">
+  <update id="updateByPrimaryKey" parameterType="com.smartosc.datasource.entity.TxOut">
     update tx_out
     set tx_id = #{txId,jdbcType=BIGINT},
       index = #{index,jdbcType=DISTINCT},

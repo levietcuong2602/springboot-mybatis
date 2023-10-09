@@ -1,4 +1,4 @@
-package com.smartosc.entity;
+package com.smartosc.datasource.entity;
 
 import java.util.ArrayList;
 import java.util.List;
