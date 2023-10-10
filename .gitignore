@@ -4,6 +4,7 @@ target/
 !**/src/test/**/target/
 
 data
+src/main/resources/credentials
 
 ### IntelliJ IDEA ###
 .idea/modules.xml

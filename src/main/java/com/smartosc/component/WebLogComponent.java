@@ -4,7 +4,7 @@ package com.smartosc.component;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.URLUtil;
 import cn.hutool.json.JSONUtil;
-import com.smartosc.dto.WebLogDTO;
+import com.smartosc.datasource.dto.WebLogDTO;
 import com.smartosc.utils.JwtTokenUtil;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;

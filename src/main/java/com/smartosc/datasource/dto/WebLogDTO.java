@@ -1,4 +1,4 @@
-package com.smartosc.dto;
+package com.smartosc.datasource.dto;
 
 
 //import io.swagger.annotations.ApiModel;
