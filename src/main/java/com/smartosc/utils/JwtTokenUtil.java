@@ -17,10 +17,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * jwt 字符串工具
- *
- * @author YuJian95  clj9509@163.com
- * @date 2020/1/19
+ * jwt token provider
+ * @author cuonglv
  */
 
 @Component
@@ -90,10 +88,10 @@ public class JwtTokenUtil {
     }
 
     /**
-     * 从 token中获取登录用户名
+     * Get username from token
      *
-     * @param token jwt 字符串
-     * @return 账号名称
+     * @param token jwt token
+     * @return username
      */
     public String getUserNameFromToken(String token) {
 
@@ -113,12 +111,11 @@ public class JwtTokenUtil {
     }
 
     /**
-     * 验证token是否还有效
+     * verify token
      *
-     * @param token       客户端传入的token
-     * @return 是否有效
+     * @param token
+     * @return true/false
      */
-    // verify jwt token
     public boolean verifyToken(String token) {
         try{
             Jwts.parserBuilder()
@@ -139,10 +136,10 @@ public class JwtTokenUtil {
     }
 
     /**
-     * 判断 token是否已经失效
+     * check token is expired
      *
-     * @param token jwt 格式字符串
-     * @return 是否失效
+     * @param token jwt
+     * @return boolean
      */
     private boolean isTokenExpired(String token) {
         Date expiredDate = getExpiredDateFromToken(token);
@@ -151,20 +148,20 @@ public class JwtTokenUtil {
     }
 
     /**
-     * 从token中获取过期时间
+     * get expired date from token
      *
-     * @param token jwt 格式字符串
-     * @return 过期时间
+     * @param token jwt
+     * @return date
      */
     private Date getExpiredDateFromToken(String token) {
         Claims claims = getClaimsFromToken(token);
         return claims.getExpiration();
     }
     /**
-     * 判断token是否可以被刷新
+     * check token can refresg
      *
-     * @param token jwt 格式字符串
-     * @return 是否能刷新
+     * @param token jwt
+     * @return boolean
      */
     public boolean canRefresh(String token) {
         return isTokenExpired(token);
@@ -173,11 +170,8 @@ public class JwtTokenUtil {
     /**
      * generate token
      *
-     * @param userDetails 用户信息
+     * @param claims
      * @return jwt token
-     */
-    /**
-     * 根据负责生成JWT的 token
      */
     private String generateToken(Map<String, Object> claims) {
         return Jwts.builder()
@@ -188,10 +182,10 @@ public class JwtTokenUtil {
     }
 
     /**
-     * 刷新token
+     * refresh token
      *
-     * @param token 原来的 jwt字符串
-     * @return 刷新后的字符串
+     * @param token
+     * @return new token
      */
     public String refreshToken(String token) {
         Claims claims = getClaimsFromToken(token);

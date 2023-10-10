@@ -3,8 +3,6 @@ package com.smartosc.config;
 import com.smartosc.security.JwtAccessDeniedHandler;
 import com.smartosc.security.JwtAuthenticationEntryPoint;
 import com.smartosc.security.JwtAuthenticationTokenFilter;
-import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
-import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import jakarta.annotation.Resource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,12 +23,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-@SecurityScheme(
-        name = "Bear Authentication",
-        type = SecuritySchemeType.HTTP,
-        bearerFormat = "JWT",
-        scheme = "bearer"
-)
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig  {
     @Resource
@@ -58,6 +50,18 @@ public class SecurityConfig  {
                 .disable()
                 .authorizeHttpRequests((authorize) -> {
                     authorize.requestMatchers("/api/**").permitAll()
+                            .requestMatchers(
+                                    HttpMethod.GET,
+                                    "/",
+                                    "/*.html",
+                                    "/favicon.ico",
+                                    "/**/*.png",
+                                    "/**/*.html",
+                                    "/**/*.css",
+                                    "/**/*.js",
+                                    "/swagger-resources/**",
+                                    "/v3/api-docs/**"
+                            ).permitAll()
                             .requestMatchers("/api/v1/account/logout", "/api/v1/account/login", "/api/v1/account/register").permitAll()
                             .requestMatchers("/api/auth/**").permitAll()
                             .requestMatchers(HttpMethod.OPTIONS).permitAll()

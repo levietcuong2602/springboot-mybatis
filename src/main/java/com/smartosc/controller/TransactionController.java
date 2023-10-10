@@ -2,7 +2,6 @@ package com.smartosc.controller;
 
 import com.smartosc.common.response.BaseResponse;
 import com.smartosc.common.response.BaseResponsePage;
-import com.smartosc.datasource.entity.Transaction;
 import com.smartosc.datasource.vo.TransactionVo4List;
 import com.smartosc.service.TransactionService;
 import jakarta.annotation.Resource;
